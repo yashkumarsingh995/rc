@@ -1,0 +1,17 @@
+service: webapp--hosting
+
+provider:
+  name: aws
+  region: us-east-2
+  environment:
+    SERVICE_NAME: ${self:service}
+
+constructs:
+  admin:
+    type: static-website
+    path: rc-admin/build
+    domain: admin--${opt:stage, self:provider.stage}.rcdevel.com
+    certificate: arn:aws:acm:us-east-1:800079107722:certificate/a62bba39-ec46-4935-9e75-659bc49253b1
+
+plugins:
+  - serverless-lift
